@@ -1,102 +1,110 @@
 <template>
     <div class="pos">
-      <el-row>
-        <el-col :span="7" class="pos-order" id="order-list">
-          <el-tabs>
-            <el-tab-pane label="点餐">
-              <el-table :data="tableData" border style="width: 100%" >
-                <el-table-column prop="goodsName" label="商品名称"></el-table-column>
-                <el-table-column prop="count" label="数量" width="50"></el-table-column>
-                <el-table-column prop="price" label="金额" width="70"></el-table-column>
-                <el-table-column label="操作" width="100" fixed="right">
-                  <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="delSingleGoods(scope.row)">删除</el-button>
-                    <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-              <div class="totalDiv">
-                <small>数量：</small>{{totalCount}}   &nbsp;&nbsp;&nbsp;&nbsp;   <small>金额：</small>{{totalMoney}}元
-              </div>
-              <div class="div-btn">
-                <el-button type="warning" >挂单</el-button>
-                <el-button type="danger" @click="delAllGoods">删除</el-button>
-                <el-button type="success" @click="checkout">结账</el-button>
-              </div>
-            </el-tab-pane>
-
-            <el-tab-pane label="挂单">
-              挂单
-            </el-tab-pane>
-            <el-tab-pane label="外卖">
-              外卖
-            </el-tab-pane>
-          </el-tabs>
-        </el-col>
-
-        <el-col :span="17">
-          <div class="often-goods">
-            <div class="title">常用商品</div>
-            <div class="often-goods-list">
-              <ul>
-                <li v-for="goods in oftenGoods" @click="addOrderList(goods)">
-                  <span>{{goods.goodsName}}</span>
-                  <span class="o-price">￥{{goods.price}}元</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="goods-type">
+      <leftNav></leftNav>
+      <div style="width: 95%;float: left;height: 100%;">
+        <el-row>
+          <el-col :span="7" class="pos-order" id="order-list">
             <el-tabs>
-              <el-tab-pane label="汉堡">
-                <ul class='cookList'>
-                  <li v-for="goods in type0Goods">
-                    <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
-                    <span class="foodName">{{goods.goodsName}}</span>
-                    <span class="foodPrice">￥{{goods.price}}元</span>
-                  </li>
-                </ul>
-              </el-tab-pane>
-              <el-tab-pane label="小食">
-                <ul class='cookList'>
-                  <li v-for="goods in type1Goods">
-                    <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
-                    <span class="foodName">{{goods.goodsName}}</span>
-                    <span class="foodPrice">￥{{goods.price}}元</span>
-                  </li>
-                </ul>
-              </el-tab-pane>
-              <el-tab-pane label="饮料">
-                <ul class='cookList'>
-                  <li v-for="goods in type2Goods">
-                    <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
-                    <span class="foodName">{{goods.goodsName}}</span>
-                    <span class="foodPrice">￥{{goods.price}}元</span>
-                  </li>
-                </ul>
-              </el-tab-pane>
-              <el-tab-pane label="套餐">
-                <ul class='cookList'>
-                  <li v-for="goods in type3Goods">
-                    <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
-                    <span class="foodName">{{goods.goodsName}}</span>
-                    <span class="foodPrice">￥{{goods.price}}元</span>
-                  </li>
-                </ul>
+              <el-tab-pane label="点餐">
+                <el-table :data="tableData" border style="width: 100%" >
+                  <el-table-column prop="goodsName" label="商品名称"></el-table-column>
+                  <el-table-column prop="count" label="数量" width="50"></el-table-column>
+                  <el-table-column prop="price" label="金额" width="70"></el-table-column>
+                  <el-table-column label="操作" width="100" fixed="right">
+                    <template slot-scope="scope">
+                      <el-button type="text" size="small" @click="delSingleGoods(scope.row)">删除</el-button>
+                      <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <div class="totalDiv">
+                  <small>数量：</small>{{totalCount}}   &nbsp;&nbsp;&nbsp;&nbsp;   <small>金额：</small>{{totalMoney}}元
+                </div>
+                <div class="div-btn">
+                  <el-button type="warning" >挂单</el-button>
+                  <el-button type="danger" @click="delAllGoods">删除</el-button>
+                  <el-button type="success" @click="checkout">结账</el-button>
+                </div>
               </el-tab-pane>
 
+              <el-tab-pane label="挂单">
+                挂单
+              </el-tab-pane>
+              <el-tab-pane label="外卖">
+                外卖
+              </el-tab-pane>
             </el-tabs>
-          </div>
-        </el-col>
-      </el-row>
+          </el-col>
+
+          <el-col :span="17">
+            <div class="often-goods">
+              <div class="title">常用商品</div>
+              <div class="often-goods-list">
+                <ul>
+                  <li v-for="goods in oftenGoods" @click="addOrderList(goods)">
+                    <span>{{goods.goodsName}}</span>
+                    <span class="o-price">￥{{goods.price}}元</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="goods-type">
+              <el-tabs>
+                <el-tab-pane label="汉堡">
+                  <ul class='cookList'>
+                    <li v-for="goods in type0Goods">
+                      <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                      <span class="foodName">{{goods.goodsName}}</span>
+                      <span class="foodPrice">￥{{goods.price}}元</span>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+                <el-tab-pane label="小食">
+                  <ul class='cookList'>
+                    <li v-for="goods in type1Goods">
+                      <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                      <span class="foodName">{{goods.goodsName}}</span>
+                      <span class="foodPrice">￥{{goods.price}}元</span>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+                <el-tab-pane label="饮料">
+                  <ul class='cookList'>
+                    <li v-for="goods in type2Goods">
+                      <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                      <span class="foodName">{{goods.goodsName}}</span>
+                      <span class="foodPrice">￥{{goods.price}}元</span>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+                <el-tab-pane label="套餐">
+                  <ul class='cookList'>
+                    <li v-for="goods in type3Goods">
+                      <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                      <span class="foodName">{{goods.goodsName}}</span>
+                      <span class="foodPrice">￥{{goods.price}}元</span>
+                    </li>
+                  </ul>
+                </el-tab-pane>
+
+              </el-tabs>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import api from '../api/pos'
+    import leftNav from "../common/leftNav"
     export default {
         name: "Pos",
+        components:{
+            leftNav
+        },
         data(){
             return{
                 tableData:[],
@@ -161,20 +169,20 @@
             //     })
 
             //读取分类商品列表
-            axios.get('http://jspang.com/DemoApi/typeGoods.php')
-                .then(response=>{
-                    console.log(response);
-                    //this.oftenGoods=response.data;
-                    this.type0Goods=response.data[0];
-                    this.type1Goods=response.data[1];
-                    this.type2Goods=response.data[2];
-                    this.type3Goods=response.data[3];
-
-                })
-                .catch(error=>{
-                    console.log(error);
-                    alert('网络错误，不能访问');
-                })
+            // axios.get('http://jspang.com/DemoApi/typeGoods.php')
+            //     .then(response=>{
+            //         console.log(response);
+            //         //this.oftenGoods=response.data;
+            //         this.type0Goods=response.data[0];
+            //         this.type1Goods=response.data[1];
+            //         this.type2Goods=response.data[2];
+            //         this.type3Goods=response.data[3];
+            //
+            //     })
+            //     .catch(error=>{
+            //         console.log(error);
+            //         alert('网络错误，不能访问');
+            //     })
         },
         mounted:function() {
           var orderListHeight = document.body.clientHeight;
@@ -236,14 +244,18 @@
             //结账
             checkout() {
                 if (this.totalCount!=0) {
-                    this.tableData = [];
-                    this.totalCount = 0;
-                    this.totalMoney = 0;
-                    this.$message({
-                        message: '结账成功，感谢你又为店里出了一份力!',
-                        type: 'success'
-                    });
-
+                    api.checkoutMoney(this.tableData,(res)=>{
+                        console.log(res.data);
+                        if(res.data.status ==='success'){
+                            this.tableData = [];
+                            this.totalCount = 0;
+                            this.totalMoney = 0;
+                            this.$message.success('结账成功，感谢你又为店里出了一份力!');
+                        }
+                    },(err)=>{
+                        console.log(err);
+                        this.$message.error('请先登录！');
+                    })
                 }else{
                     this.$message.error('不能空结。老板了解你急切的心情！');
                 }
@@ -253,7 +265,7 @@
     }
 </script>
 
-<style scoped>
+<style>
 .pos-order{
   background-color: #F9FAFC;
   border-right: 1px solid #C0CCDA;

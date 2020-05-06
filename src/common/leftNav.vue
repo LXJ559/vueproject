@@ -25,13 +25,23 @@
         <i class="icon iconfont icon-gongnengjianyi"></i>
         <div>设置</div>
       </li>
+
+      <li style="margin-top: 198px" @click="myOrder">
+        <i><img src="../assets/logo.png" alt="" style="height: 20px;width: 20px"></i>
+        <div>个人中心</div>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
     export default {
-        name: "leftNav"
+        name: "leftNav",
+        methods:{
+            myOrder(){
+                this.$router.push('/order');
+            }
+        }
     }
 </script>
 
