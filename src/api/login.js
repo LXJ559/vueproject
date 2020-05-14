@@ -1,8 +1,12 @@
 import axios from 'axios'
+import { SERVICE_URL} from "../constant";
+
+const baseApiUrl = SERVICE_URL.url;
+
 
 export default {
   register(data,success,error){
-    axios.post('http://localhost:8888/pos/user/register',data)
+    axios.post(baseApiUrl + '/pos/user/register',data)
       .then((res)=>{
         success(res);
       },(e)=>{
@@ -14,7 +18,7 @@ export default {
   },
 
   login(data,success,error) {
-    axios.post('http://localhost:8888/pos/user/login',data)
+    axios.post(baseApiUrl + '/pos/user/login',data)
       .then((res)=>{
         success(res);
       },(e)=>{

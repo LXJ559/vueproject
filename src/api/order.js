@@ -1,7 +1,11 @@
 import  axios from 'axios'
+import { SERVICE_URL} from "../constant";
+
+const baseApiUrl = SERVICE_URL.url;
+
 export default {
   getOrder(success,error){
-    axios.get('http://localhost:8888/pos/getorder')
+    axios.get(baseApiUrl + '/pos/getorder')
       .then((res)=>{
         console.log(res);
         success(res);
