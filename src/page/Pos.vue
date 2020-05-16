@@ -21,7 +21,7 @@
                   <small>数量：</small>{{totalCount}}   &nbsp;&nbsp;&nbsp;&nbsp;   <small>金额：</small>{{totalMoney}}元
                 </div>
                 <div class="div-btn">
-                  <el-button type="warning" >挂单</el-button>
+<!--                  <el-button type="warning" >挂单</el-button>-->
                   <el-button type="danger" @click="delAllGoods">删除</el-button>
                   <el-button type="success" @click="checkout">结账</el-button>
                 </div>
@@ -97,7 +97,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import api from '../api/pos'
     import leftNav from "../common/leftNav"
     export default {
@@ -107,48 +106,11 @@
         },
         data(){
             return{
+                //左侧清单
                 tableData:[],
-                oftenGoods:[{
-                    goodsId:1,
-                    goodsName:'香辣鸡腿堡',
-                    price:18
-                }, {
-                    goodsId:2,
-                    goodsName:'田园鸡腿堡',
-                    price:15
-                }, {
-                    goodsId:3,
-                    goodsName:'和风汉堡',
-                    price:15
-                }, {
-                    goodsId:4,
-                    goodsName:'快乐全家桶',
-                    price:80
-                }, {
-                    goodsId:5,
-                    goodsName:'脆皮炸鸡腿',
-                    price:10
-                }, {
-                    goodsId:6,
-                    goodsName:'魔法鸡块',
-                    price:20
-                }, {
-                    goodsId:7,
-                    goodsName:'可乐大杯',
-                    price:10
-                }, {
-                    goodsId:8,
-                    goodsName:'雪顶咖啡',
-                    price:18
-                }, {
-                    goodsId:9,
-                    goodsName:'大块鸡米花',
-                    price:15
-                }, {
-                    goodsId:20,
-                    goodsName:'香脆鸡柳',
-                    price:17
-                }],
+                //常用商品
+                oftenGoods:[],
+                //下面分类商品
                 type0Goods:[],
                 type1Goods:[],
                 type2Goods:[],
@@ -158,31 +120,12 @@
             }
         },
         created:function(){
-            // axios.get('http://old.jspag.com/DemoApi/oftenGoods.php')
-            //     .then(response=>{
-            //         console.log(response);
-            //         this.oftenGoods=response.data;
-            //     })
-            //     .catch(error=>{
-            //         console.log(error);
-            //         alert('网络错误，不能访问');
-            //     })
-
-            //读取分类商品列表
-            // axios.get('http://jspang.com/DemoApi/typeGoods.php')
-            //     .then(response=>{
-            //         console.log(response);
-            //         //this.oftenGoods=response.data;
-            //         this.type0Goods=response.data[0];
-            //         this.type1Goods=response.data[1];
-            //         this.type2Goods=response.data[2];
-            //         this.type3Goods=response.data[3];
-            //
-            //     })
-            //     .catch(error=>{
-            //         console.log(error);
-            //         alert('网络错误，不能访问');
-            //     })
+            api.getAllGoods((res)=>{
+                // console.log(res);
+                this.oftenGoods = res.data.goodsList;
+            },(error)=>{
+                console.log('数据加载失败！')
+            })
         },
         mounted:function() {
           var orderListHeight = document.body.clientHeight;
@@ -197,14 +140,14 @@
                 //判断是否这个商品已经存在于订单列表
                 for (let i=0; i<this.tableData.length;i++){
                     console.log(this.tableData[i].goodsId);
-                    if(this.tableData[i].goodsId==goods.goodsId){
+                    if(this.tableData[i].goodsId === goods.goodsId){
                         isHave=true; //存在
                     }
                 }
                 //根据isHave的值判断订单列表中是否已经有此商品
                 if(isHave){
                     //存在就进行数量添加
-                    let arr = this.tableData.filter(o =>o.goodsId == goods.goodsId);
+                    let arr = this.tableData.filter(o =>o.goodsId === goods.goodsId);
                     arr[0].count++;
                     //console.log(arr);
                 }else{
@@ -220,7 +163,7 @@
             //删除单个商品
             delSingleGoods(goods){
                 console.log(goods);
-                this.tableData=this.tableData.filter(o => o.goodsId !=goods.goodsId);
+                this.tableData=this.tableData.filter(o => o.goodsId != goods.goodsId);
                 this.getAllMoney();
             },
 

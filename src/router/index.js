@@ -4,7 +4,14 @@ import Pos from "../page/Pos";
 import Order from "../page/Order"
 import Login from "../page/Login";
 
-Vue.use(Router)
+Vue.use(Router);
+
+//在路由中添加了相同的路由.报错：Navigating to current location (XXX) is not allowed
+// 解决：重写路由的push方法
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 
 export default new Router({
   routes: [

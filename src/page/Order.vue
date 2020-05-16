@@ -13,11 +13,13 @@
             </el-table>
 
             <div class="totalDiv">
-              <small>数量：</small>  &nbsp;&nbsp;&nbsp;&nbsp;   <small>金额：</small>元
+              <label>数量：</label>  &nbsp;&nbsp;&nbsp;&nbsp;   <label>金额：</label>元
+              <router-link to="/" style="text-decoration: none;float: right;">返回</router-link>
             </div>
-            <el-button  size="mini" @click="back" style="margin-left: 200px">
-              返回
-            </el-button>
+          </el-col>
+
+          <el-col :span="4" style="float: right;border: solid 1px #333;margin-top: 30px;height: 100%;">
+            <label>姓名：</label>{{name}}
           </el-col>
         </el-row>
       </div>
@@ -28,6 +30,7 @@
 <script>
     import leftNav from "../common/leftNav"
     import api from '../api/order'
+    import store from "../vuex/store";
     export default {
         name: "Order",
         components:{
@@ -35,7 +38,8 @@
         },
         data(){
             return{
-                orderData:[]
+                orderData:[],
+                name:store.state.username
             }
         },
         created:function () {
@@ -47,9 +51,6 @@
             })
         },
         methods:{
-            back(){
-                this.$router.push('/')
-            }
         }
     }
 </script>
@@ -57,6 +58,7 @@
 <style scoped>
   .order_list{
     padding-left: 200px;
+    margin-top: 30px;
   }
   .totalDiv{
     background-color: #fff;

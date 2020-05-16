@@ -22,6 +22,7 @@
 
 <script>
     import api from '../api/login'
+    import store from "../vuex/store";
     export default {
         name: "Login",
         data(){
@@ -45,7 +46,7 @@
                     if (valid){
                         api.register(this.user,(res)=>{
                             console.log(res.data);
-                            if (res.data.message =='注册成功'){
+                            if (res.data.message === '注册成功'){
                                 this.$message.success('注册成功');
                             }else {
                                 this.$message.error('该用户已被注册，请直接登录!')
@@ -67,8 +68,13 @@
                             if(res.data.status ==='success'){
                                 //这两个一定要按顺序，否则第一次登陆报错
                                 localStorage.setItem("token",res.data.token);
+                                store.commit('add',this.user.username)
                                 this.$router.push('/');
-                            }else {
+                            }else if(res.data.status === 'please register'){
+                                this.$message.error('请先注册！');
+                                this.user.username = "";
+                                this.user.password = "";
+                            } else {
                                 this.$message.error('用户名或密码不正确！');
                             }
                         },(error)=>{
