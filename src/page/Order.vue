@@ -7,7 +7,7 @@
             <el-table :data="orderData" border>
               <el-table-column>
                 <el-table-column prop="goodsName" label="商品名称"></el-table-column>
-                <el-table-column prop="count" label="数量" width="90"></el-table-column>
+                <el-table-column id="count" prop="count" label="数量" width="90"></el-table-column>
                 <el-table-column prop="price" label="金额" width="110"></el-table-column>
               </el-table-column>
             </el-table>
@@ -44,8 +44,16 @@
         },
         created:function () {
             api.getOrder((res)=>{
-                console.log(res);
-                this.orderData = res.data;
+                // console.log(res);
+                let goodsList = res.data.goodsList;
+                let countList = res.data.orderList;
+                for(let i=0 ; i<goodsList.length;i++){
+                    for(let key in countList[i]){
+                        goodsList[i][key]=countList[i][key]
+                    }
+                }
+                console.log(goodsList)
+                this.orderData = goodsList;
             },(err)=>{
                 console.log(err);
             })

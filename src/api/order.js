@@ -5,7 +5,7 @@ const baseApiUrl = SERVICE_URL.url;
 
 export default {
   getOrder(success,error){
-    axios.get(baseApiUrl + '/pos/getorder')
+    axios.get(baseApiUrl + '/pos/order/getOrder')
       .then((res)=>{
         console.log(res);
         success(res);

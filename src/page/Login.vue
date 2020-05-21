@@ -48,6 +48,8 @@
                             console.log(res.data);
                             if (res.data.message === '注册成功'){
                                 this.$message.success('注册成功');
+                                this.user.username = "";
+                                this.user.password = "";
                             }else {
                                 this.$message.error('该用户已被注册，请直接登录!')
                             }
