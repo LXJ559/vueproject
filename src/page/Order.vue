@@ -13,7 +13,7 @@
             </el-table>
 
             <div class="totalDiv">
-              <label>数量：</label>  &nbsp;&nbsp;&nbsp;&nbsp;   <label>金额：</label>元
+              <label>数量：</label>{{totalCount}}  &nbsp;&nbsp;&nbsp;&nbsp;   <label>金额：</label>{{totalMoney}}元
               <router-link to="/" style="text-decoration: none;float: right;">返回</router-link>
             </div>
           </el-col>
@@ -39,6 +39,8 @@
         data(){
             return{
                 orderData:[],
+                totalCount:0,
+                totalMoney:0,
                 name:store.state.username
             }
         },
@@ -52,8 +54,14 @@
                         goodsList[i][key]=countList[i][key]
                     }
                 }
-                console.log(goodsList)
+                //console.log(goodsList)
                 this.orderData = goodsList;
+                if(this.orderData){
+                    this.orderData.forEach((element) => {
+                        this.totalCount+=element.count;
+                        this.totalMoney=this.totalMoney+(element.price*element.count);
+                    });
+                }
             },(err)=>{
                 console.log(err);
             })

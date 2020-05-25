@@ -70,7 +70,7 @@
                             if(res.data.status ==='success'){
                                 //这两个一定要按顺序，否则第一次登陆报错
                                 localStorage.setItem("token",res.data.token);
-                                store.commit('add',this.user.username)
+                                store.commit('add',this.user.username);
                                 this.$router.push('/');
                             }else if(res.data.status === 'please register'){
                                 this.$message.error('请先注册！');

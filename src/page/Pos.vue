@@ -186,7 +186,7 @@
             },
             //结账
             checkout() {
-                if (this.totalCount!=0) {
+                if (this.totalCount!== 0) {
                     api.checkoutMoney(this.tableData,(res)=>{
                         console.log(res.data);
                         if(res.data.status ==='success'){
