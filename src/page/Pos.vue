@@ -126,6 +126,7 @@
             },(error)=>{
                 console.log('数据加载失败！')
             })
+
         },
         mounted:function() {
           var orderListHeight = document.body.clientHeight;

@@ -30,7 +30,6 @@
 <script>
     import leftNav from "../common/leftNav"
     import api from '../api/order'
-    import store from "../vuex/store";
     export default {
         name: "Order",
         components:{
@@ -41,7 +40,7 @@
                 orderData:[],
                 totalCount:0,
                 totalMoney:0,
-                name:store.state.username
+                name:sessionStorage.getItem("uName")
             }
         },
         created:function () {
