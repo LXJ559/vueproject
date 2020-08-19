@@ -40,7 +40,7 @@
                 orderData:[],
                 totalCount:0,
                 totalMoney:0,
-                name:sessionStorage.getItem("uName")
+                name:localStorage.getItem("uName")      //sessionStorage.getItem("uName")
             }
         },
         created:function () {

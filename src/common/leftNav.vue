@@ -13,7 +13,7 @@
         <i class="icon iconfont icon-hanbao"></i>
         <div>商品</div>
       </li>
-      <li>
+      <li @click="myOrder">
         <i class="icon iconfont icon-huiyuanqia"></i>
         <div>会员</div>
       </li>
@@ -39,8 +39,8 @@
         size="40%">
 
         <el-table :data="gridData" border>
-          <el-table-column prop="msgTitle" label="标题" width="150px"></el-table-column>
-          <el-table-column prop="msgContent" label="内容"></el-table-column>
+          <el-table-column prop="title" label="标题" width="150px"></el-table-column>
+          <el-table-column prop="content" label="内容"></el-table-column>
         </el-table>
       </el-drawer>
 
@@ -53,8 +53,9 @@
 </template>
 
 <script>
-    import store from "../vuex/store";
+    import api from '../api/message'
     export default {
+        name: "leftNav",
         data() {
             return {
                 table: false,
@@ -63,11 +64,19 @@
                 queueReceiveSetting: { // 消息队列配置
                     websock: null,
                     client: null,
-                    wsuri: 'ws://localhost:8888/pos/websocket/'+ sessionStorage.getItem("uName")
+                    wsuri: 'ws://localhost:8888/pos/websocket/'+ localStorage.getItem("uName")
                 }
             };
         },
-        name: "leftNav",
+        created () {
+            api.getMessages((res)=>{
+                // console.log(res);
+                this.gridData = res.data.messageList;
+            },(error)=>{
+                console.log('消息加载失败！')
+            })
+            this.initWebSocket();
+        },
         methods:{
             myOrder(){
                 this.$router.push('/order');
@@ -93,11 +102,7 @@
                     console.log('连接出错')
                 }
             }
-        },
-        created () {
-            this.initWebSocket();
         }
-
     }
 </script>
 

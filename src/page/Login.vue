@@ -71,8 +71,9 @@
                             if(res.data.status ==='success'){
                                 //这两个一定要按顺序，否则第一次登陆报错
                                 localStorage.setItem("token",res.data.token);
-                                // store.commit('add',this.user.username); //刷新页面信息失效
-                                sessionStorage.setItem("uName",this.user.username);
+                                // store.commit('add',this.user.username); //刷新页面信息失效,用下面两种方式
+                                localStorage.setItem("uName",this.user.username);
+                                // sessionStorage.setItem("uName",this.user.username); //这种是为了保证与token一致，所以用上面的
                                 this.$router.push('/');
                             }else if(res.data.status === 'please register'){
                                 this.$message.error('请先注册！');
