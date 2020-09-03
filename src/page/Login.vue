@@ -15,6 +15,8 @@
             <el-button long @click="login">
               登  录
             </el-button>
+            <br>
+            <el-link type="primary" :underline="false" :href="findPsw" style="float: right">忘记密码？</el-link>
           </el-form-item>
         </el-form>
   </div>
@@ -22,7 +24,6 @@
 
 <script>
     import api from '../api/login'
-    import store from "../vuex/store";
     export default {
         name: "Login",
         data(){
@@ -34,7 +35,8 @@
                 ruleValidate:{
                     username:[{ required: true, message: '用户名不能为空', trigger: 'blur' }],
                     password:[{ required: true, message: '密码不能为空', trigger: 'blur' }]
-                }
+                },
+                findPsw:'http://localhost:8080/#/findPsw',
             }
         },
         created(){
@@ -43,25 +45,7 @@
 
         methods:{
             register(){
-                this.$refs['formValidate'].validate((valid)=>{
-                    if (valid){
-                        api.register(this.user,(res)=>{
-                            console.log(res.data);
-                            if (res.data.message === '注册成功'){
-                                this.$message.success('注册成功');
-                                this.user.username = "";
-                                this.user.password = "";
-                            }else {
-                                this.$message.error('该用户已被注册，请直接登录!')
-                            }
-                        },(error)=>{
-                            console.log(error);
-                            this.$message.error('未知的错误');
-                        })
-                    }else {
-                        this.$message.error('请输入正确的用户名或者密码！');
-                    }
-                })
+                this.$router.push('/register');
             },
             login(){
                 this.$refs['formValidate'].validate((valid)=>{

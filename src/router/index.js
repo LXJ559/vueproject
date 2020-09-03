@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Pos from "../page/Pos";
 import Order from "../page/Order"
 import Login from "../page/Login";
+import Register from "../page/Register"
+import FindPsw from "../page/FindPsw";
 
 Vue.use(Router);
 
@@ -37,6 +39,20 @@ export default new Router({
         title: '登录',
       },
       component:Login
+    },
+    {
+      path:'/register',
+      meta: {
+        title: '注册',
+      },
+      component:Register
+    },
+    {
+      path:'/findPsw',
+      meta: {
+        title: '注册',
+      },
+      component:FindPsw
     }
   ]
 })
