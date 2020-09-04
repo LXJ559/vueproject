@@ -16,7 +16,7 @@
           注  册
         </el-button>
         <el-button long @click="login">
-          登  录
+          有账号？直接登录
         </el-button>
       </el-form-item>
     </el-form>
@@ -36,7 +36,8 @@
                 },
                 ruleValidate:{
                     username:[{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-                    password:[{ required: true, message: '密码不能为空', trigger: 'blur' }],
+                    password:[{ required: true, message: '密码不能为空', trigger: 'blur'},
+                        {required: true, message: '密码长度在8到20', trigger: ['blur', 'change'],min:8,max:20}],
                     email:[{ required: true, message: '邮箱不能为空', trigger: 'blur' },{
                         type: 'email',
                         message: '请输入正确的邮箱地址',

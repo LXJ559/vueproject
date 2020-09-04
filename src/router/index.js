@@ -5,6 +5,7 @@ import Order from "../page/Order"
 import Login from "../page/Login";
 import Register from "../page/Register"
 import FindPsw from "../page/FindPsw";
+import Reset from "../page/Reset";
 
 Vue.use(Router);
 
@@ -53,6 +54,13 @@ export default new Router({
         title: '注册',
       },
       component:FindPsw
+    },
+    {
+      path:'/reset',
+      meta: {
+        title: '注册',
+      },
+      component:Reset
     }
   ]
 })

@@ -21,7 +21,7 @@
             <el-button long @click="submit">
               提交
             </el-button>
-            <el-button long @click="back">
+            <el-button long @click="backLogin">
               返 回
             </el-button>
             <br>
@@ -29,46 +29,45 @@
         </el-form>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
 <script>
-  import api from "../api/FindPsw";
+  import api from "../api/findPsw";
     export default {
         name: "FindPsw",
-        data(){
+        data() {
             return {
-                user:{
+                user: {
                     username: "",
                     email: "",
-                    VerificationCode:""
+                    VerificationCode: ""
                 },
-                ruleValidate:{
-                    username:[{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-                    email:[{ required: true, message: '邮箱不能为空', trigger: 'blur' },{
+                ruleValidate: {
+                    username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
+                    email: [{required: true, message: '邮箱不能为空', trigger: 'blur'}, {
                         type: 'email',
                         message: '请输入正确的邮箱地址',
                         trigger: ['blur', 'change'],
                     }]
                 },
-                count:0,
-                timer:null,
-                show:true,
-                isDisabled:false
+                count: 0,
+                timer: null,
+                show: true,
+                isDisabled: false
             }
         },
 
-        methods:{
-            getVerificationCode(){
-                this.$refs['formValidate'].validate((valid)=>{
-                    if (valid){
-                        api.getVerificationCode(this.user,(res)=>{
-                            if(res.data.success==='success'){
+        methods: {
+            getVerificationCode() {
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        api.getVerificationCode(this.user, (res) => {
+                            if (res.data.success === 'success') {
                                 this.$message.success('验证码已发送至您邮箱');
-                                document.getElementById("vCode").style.backgroundColor="RGB(236,245,255)";
-                                const Timer_count = 60*5;
-                                if(!this.timer) {
+                                document.getElementById("vCode").style.backgroundColor = "RGB(236,245,255)";
+                                const Timer_count = 60 * 5;
+                                if (!this.timer) {
                                     this.count = Timer_count;
                                     this.timer = setInterval(() => {
                                         if (this.count > 0 && this.count <= Timer_count) {
@@ -82,29 +81,34 @@
                                             this.timer = null
                                         }
                                     }, 1000)
-                                }else {
+                                } else {
                                     this.$message.error("出错了，请刷新页面重新获取");
                                 }
                             }
                         });
-                    }else {
+                    } else {
                         this.$message.error("请输入正确的信息");
                     }
                 })
             },
 
-            submit(){
-                api.checkVCode(this.user,(res)=>{
-                    if (res.data.success==='success'){
-                        this.$router.push('/login');
-                    }else{
-                        this.$message.error(res.data.message);
-                    }
-                },(error)=>{
-                    this.$message.error(error)
-                })
+            submit() {
+                    this.$refs['formValidate'].validate((valid) => {
+                        if (valid) {
+                            api.checkVCode(this.user, (res) => {
+                                if (res.data.success === 'success') {
+                                    this.$router.push('/reset');
+                                } else {
+                                    this.$message.error(res.data.message);
+                                }
+                            }, (error) => {
+                                this.$message.error(error)
+                            })
+                        }
+                    })
             },
-            back(){
+
+            backLogin() {
                 this.$router.back();
             }
         }
