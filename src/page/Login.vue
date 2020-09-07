@@ -41,6 +41,7 @@
         },
         created(){
             localStorage.removeItem("token");
+            localStorage.removeItem("uName");
         },
 
         methods:{

@@ -164,7 +164,7 @@
             //删除单个商品
             delSingleGoods(goods){
                 console.log(goods);
-                this.tableData=this.tableData.filter(o => o.goodsId != goods.goodsId);
+                this.tableData=this.tableData.filter(o => o.goodsId !== goods.goodsId);
                 this.getAllMoney();
             },
 
@@ -195,10 +195,11 @@
                             this.totalCount = 0;
                             this.totalMoney = 0;
                             this.$message.success('结账成功，感谢你又为店里出了一份力!');
+                        }else {
+                            this.$message.error('请先登录！');
                         }
                     },(err)=>{
                         console.log(err);
-                        this.$message.error('请先登录！');
                     })
                 }else{
                     this.$message.error('不能空结。老板了解你急切的心情！');
